@@ -65,9 +65,9 @@ if ! [ -z "$DEVICE_LIST" ]; then
       breakfast $codename 2>&1 >&$DEBUG_LOG
       if mka recoveryimage 2>&1 >&$DEBUG_LOG; then
         # Move produced IMG files to the main OUT directory
-        echo ">> [$(date)] Moving build artifacts for $codename to '$IMG_DIR'" >> $DOCKER_LOG
+        echo ">> [$(date)] Moving build artifacts for $codename to '$IMG_DIR/twrp-$codename.img'" >> $DOCKER_LOG
         cd $SRC_DIR
-        find out/target/product/$codename -name '*twrp*.img*' -exec mv {} $IMG_DIR \; >&$DEBUG_LOG
+        find out/target/product/$codename -name 'recovery.img' -exec mv {} $IMG_DIR/twrp-$codename.img \; >&$DEBUG_LOG
       else
         echo ">> [$(date)] Failed build for $codename" >> $DOCKER_LOG
       fi

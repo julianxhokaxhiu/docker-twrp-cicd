@@ -50,11 +50,8 @@ if ! [ -z "$DEVICE_LIST" ]; then
   echo ">> [$(date)] Preparing build environment" >> $DOCKER_LOG
   source build/envsetup.sh 2>&1 >&$DEBUG_LOG
 
-  # Set a custom updater URI if a OTA URL is provided
-  if ! [ -z "$OTA_URL" ]; then
-    echo ">> [$(date)] Adding OTA URL '$OTA_URL' to build.prop" >> $DOCKER_LOG
-    sed -i "1s;^;PRODUCT_PROPERTY_OVERRIDES += $OTA_PROP=$OTA_URL\n\n;" vendor/cm/config/common.mk >&$DEBUG_LOG
-  fi
+  # Fetch TWRP version
+  TWRP_VERSION=`sed -n 's/#define TW_MAIN_VERSION_STR[ ]*"//p' $SRC_DIR/bootable/recovery/variables.h | sed "s/\"//g"`
 
   # Cycle DEVICE_LIST environment variable, to know which one may be executed next
   IFS=','
@@ -65,9 +62,9 @@ if ! [ -z "$DEVICE_LIST" ]; then
       breakfast $codename 2>&1 >&$DEBUG_LOG
       if mka recoveryimage 2>&1 >&$DEBUG_LOG; then
         # Move produced IMG files to the main OUT directory
-        echo ">> [$(date)] Moving build artifacts for $codename to '$IMG_DIR/twrp-$codename.img'" >> $DOCKER_LOG
+        echo ">> [$(date)] Moving build artifacts for $codename to '$IMG_DIR/twrp-$TWRP_VERSION-0-$codename.img'" >> $DOCKER_LOG
         cd $SRC_DIR
-        find out/target/product/$codename -name 'recovery.img' -exec mv {} $IMG_DIR/twrp-$codename.img \; >&$DEBUG_LOG
+        find out/target/product/$codename -name 'recovery.img' -exec cp {} $IMG_DIR/twrp-$TWRP_VERSION-0-$codename.img \; >&$DEBUG_LOG
       else
         echo ">> [$(date)] Failed build for $codename" >> $DOCKER_LOG
       fi

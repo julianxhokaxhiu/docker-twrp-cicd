@@ -19,7 +19,7 @@ if ! [ -z "$DEVICE_LIST" ]; then
   if ! [ "$(ls -A $SRC_DIR)" ]; then
     # Initialize repository
     echo ">> [$(date)] Initializing repository" >> $DOCKER_LOG
-    yes | repo init -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_lineageos.git -b $BRANCH_NAME 2>&1 >&$DEBUG_LOG
+    yes | repo init -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b $BRANCH_NAME 2>&1 >&$DEBUG_LOG
   fi
 
   # Copy local manifests to the appropriate folder in order take them into consideration

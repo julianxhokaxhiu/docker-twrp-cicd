@@ -42,7 +42,7 @@ if ! [ -z "$DEVICE_LIST" ]; then
   if [ "$CLEAN_OUTDIR" = true ]; then
     echo ">> [$(date)] Cleaning '$IMG_DIR'" >> $DOCKER_LOG
     cd $IMG_DIR
-    rm *
+    rm * 2>&1 >&$DEBUG_LOG
     cd $SRC_DIR
   fi
 

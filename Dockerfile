@@ -28,7 +28,7 @@ ENV CCACHE_COMPRESS 1
 
 # Environment for the LineageOS Branch name
 # See https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni/branches for possible options
-ENV BRANCH_NAME 'twrp-14.1'
+ENV BRANCH_NAME 'twrp-7.1'
 
 # Environment for the device list ( separate by comma if more than one)
 # eg. DEVICE_LIST=hammerhead,bullhead,angler

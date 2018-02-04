@@ -59,7 +59,7 @@ if ! [ -z "$DEVICE_LIST" ]; then
     if ! [ -z "$codename" ]; then
       # Start the build
       echo ">> [$(date)] Starting build for $codename" >> $DOCKER_LOG
-      breakfast $codename 2>&1 >&$DEBUG_LOG
+      lunch omni_$codename-eng 2>&1 >&$DEBUG_LOG
       if mka recoveryimage 2>&1 >&$DEBUG_LOG; then
         # Move produced IMG files to the main OUT directory
         echo ">> [$(date)] Moving build artifacts for $codename to '$IMG_DIR/twrp-$TWRP_VERSION-0-$codename.img'" >> $DOCKER_LOG
